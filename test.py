@@ -1,8 +1,10 @@
-import sys
+from itertools import combinations,permutations
 
-a = int(input())
 
-c=int(input())
-print(c)
-a=[1,2,3,4]
-print(a)
+a=[0]
+
+
+
+print(list(combinations(a,10)))
+
+print(list(permutations(a)))
