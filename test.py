@@ -1,10 +1,6 @@
-from itertools import combinations,permutations
-
-
-a=[0]
+a=[1,2,3,4,2,4,2,4]
 
 
 
-print(list(combinations(a,10)))
-
-print(list(permutations(a)))
+a[0:2]=[100,100]
+print(a)
