@@ -1,6 +1,11 @@
-a=[1,2,3,4,2,4,2,4]
 
 
+N= 8
 
-a[0:2]=[100,100]
-print(a)
+
+print(-1%N)
+print(-2%N)
+print(-3%N)
+print(-4%N)
+print(-10%N)
+
