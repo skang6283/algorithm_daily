@@ -1,7 +1,6 @@
-import re
-answer = input()
-answer=answer.lower()
-answer = re.sub('[^a-z0-9_.-]', '', answer)
+from itertools import combinations,permutations
+from bisect import bisect_left,bisect_right
 
-print(answer)
+a= [10,9,7,6]
 
+print(bisect_right(a,5))
