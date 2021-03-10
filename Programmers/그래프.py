@@ -9,21 +9,25 @@ def solution(n, edge):
         edges[v1].append(v2)
         edges[v2].append(v1)
 
-    print(edges)
-    visited = []
+    visited = set()
+    c = [0] * (n + 1)
     q = deque()
-    q.append((1,0))
+    q.append((1, 0))
+    visited.add(1)
+    mx = 0
     while q:
-        print(q)
         curv, cost = q.popleft()
 
-        print("asdfasd")
         for neighbor in edges[curv]:
             if neighbor not in visited:
-                visited.append(neighbor)
+                visited.add(neighbor)
+                if cost == mx:
+                    mx = cost + 1
+                c[neighbor] = cost + 1
                 q.append((neighbor, cost + 1))
+
+    for cc in c:
+        if cc == mx:
+            answer += 1
+
     return answer
-
-
-a = [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]
-solution(6,a)
