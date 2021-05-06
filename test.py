@@ -1,48 +1,21 @@
-cnt = 0
-board = []
+from collections import deque
 
+def solution(ads):
+    answer = 0
 
-def dia(y, x,py,px,n):
+    #sort by start time
+    ads.sort(key = lambda x: x[0])
 
-    cy, cx = y, x
-    while cy>=0 and cx>=0 and cy<n and cx<n:
-        if board[cy][cx]:
-            return False
-        cy += py
-        cx += px
-    return True
+    remaining=deque()
+    remaining.add(ads[0])
 
-def vert(y,x,n):
-    cy = 0
-    while cy < n:
-        if cy != y and board[cy][x]:
-            return False
-        cy += 1
-    return True
+    for i in range(1,len(ads)):
+        start,cost = remaining[0]
+        next_start,next_cost=ads[i]
 
+        first_waiting_cost = (next_start-start+5)*cost
+        next_waiting_cost = (start+5-next_start)*next_cost
 
-def dfs(y, n):
-    global cnt
-    if y == n:
-        cnt += 1
-        for a in board:
-            print(a)
-        return
+        if first_waiting_cost>next_waiting_cost
 
-    for x in range(n):
-        if dia(y,x,-1,-1,n) and dia(y,x,-1,1,n) and dia(y,x,1,-1,n) and dia(y,x,1,1,n) and vert(y,x,n):
-            board[y][x] = 1
-            dfs(y + 1, n)
-            board[y][x] = 0
-
-
-def solution(n):
-    for _ in range(n):
-        board.append([0] * n)
-    print(board)
-    dfs(0, n)
-
-    return cnt
-
-solution(4)
-print(cnt)
+    return answer
