@@ -1,21 +1,53 @@
 from collections import deque
+import copy
+import sys
 
-def solution(ads):
-    answer = 0
+answer=sys.maxsize
+def bfs(start,end,graph,traps):
+    global answer
+    q=deque()
+    q.append((start,graph,0))
+    while q:
+        fr,graph,p = q.popleft()
+        if p>=answer:continue
 
-    #sort by start time
-    ads.sort(key = lambda x: x[0])
+        for to,price,dir in graph[fr]:
+            if dir == 0:
+                if to == end:
+                    answer = min(answer, p+price)
+                    continue
+                if to in traps:
+                    new_g = copy.deepcopy(graph)
 
-    remaining=deque()
-    remaining.add(ads[0])
+                    for i in range(len(new_g[to])):
+                        b,pp,dir = new_g[to][i]
+                        new_g[to][i][2] = 1- dir
+                        for i in range(len(new_g[b])):
+                            if new_g[b][i][0]==to:
+                                new_g[b][i][2] = 1-new_g[b][i][2]
 
-    for i in range(1,len(ads)):
-        start,cost = remaining[0]
-        next_start,next_cost=ads[i]
+                    q.append((to,new_g,p+price))
+                else:
+                    q.append((to,graph,p+price))
 
-        first_waiting_cost = (next_start-start+5)*cost
-        next_waiting_cost = (start+5-next_start)*next_cost
 
-        if first_waiting_cost>next_waiting_cost
+
+def solution(n, start, end, roads, traps):
+    graph=[[] for _ in range(n)]
+    traps = set([t-1 for t in traps])
+
+    for fr,to,price in roads:
+        graph[fr-1].append([to-1,price,0])
+        graph[to-1].append([fr-1,price,1])
+
+    start-=1
+    end-=1
+    bfs(start,end,graph,traps)
 
     return answer
+
+
+#a = solution(3,1,3,[[1, 2, 2], [3, 2, 3]],[2])
+
+a= solution(4,1,4,[[1, 2, 1], [3, 2, 1], [2, 4, 1]],[2,3])
+print(a)
